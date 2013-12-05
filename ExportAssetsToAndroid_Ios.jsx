@@ -5,11 +5,6 @@ var selectedExportOptions = {};
 
 var androidExportOptions = [
     {
-        name: "ldpi",
-        scaleFactor: 75,
-        type: "android"
-    },
-    {
         name: "mdpi",
         scaleFactor: 100,
         type: "android"
@@ -22,6 +17,11 @@ var androidExportOptions = [
     {
         name: "xhdpi",
         scaleFactor: 200,
+        type: "android"
+    },
+    {
+        name: "xxhdpi",
+        scaleFactor: 300,
         type: "android"
     }
 ];
