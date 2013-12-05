@@ -34,7 +34,7 @@ var iosExportOptions = [
     },
     {
         name: "@2x",
-        scaleFactor: 100,
+        scaleFactor: 200,
         type: "ios"
     }
 ];
