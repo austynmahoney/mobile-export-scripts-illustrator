@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Author: austynmahoney (https://github.com/austynmahoney)
 */
 var selectedExportOptions = {};
@@ -22,6 +22,11 @@ var androidExportOptions = [
     {
         name: "xxhdpi",
         scaleFactor: 300,
+        type: "android"
+    },
+    {
+        name: "xxxhdpi",
+        scaleFactor: 400,
         type: "android"
     }
 ];
