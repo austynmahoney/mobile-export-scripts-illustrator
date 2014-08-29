@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Author: austynmahoney (https://github.com/austynmahoney)
 */
 var selectedExportOptions = {};
@@ -6,22 +6,22 @@ var selectedExportOptions = {};
 var androidExportOptions = [
     {
         name: "mdpi",
-        scaleFactor: 100,
+        scaleFactor: 50,
         type: "android"
     },
     {
         name: "hdpi",
-        scaleFactor: 150,
+        scaleFactor: 75,
         type: "android"
     },
     {
         name: "xhdpi",
-        scaleFactor: 200,
+        scaleFactor: 100,
         type: "android"
     },
     {
         name: "xxhdpi",
-        scaleFactor: 300,
+        scaleFactor: 150,
         type: "android"
     }
 ];
@@ -29,12 +29,12 @@ var androidExportOptions = [
 var iosExportOptions = [
     {
         name: "",
-        scaleFactor: 100,
+        scaleFactor: 50,
         type: "ios"
     },
     {
         name: "@2x",
-        scaleFactor: 200,
+        scaleFactor: 100,
         type: "ios"
     }
 ];
