@@ -28,8 +28,12 @@ Selected Directory
 │   │   └───app-icon.png
 └───iOS
     ├───app-icon.png
-    └───app-icon@2x.png
+    ├───app-icon@2x.png
+    └───app-icon@3x.png
 ```
+
+The default scale for android is `xhdpi`, for iOS it is `@2x`. The script will scale up and down from these sizes.
+
 
 License
 ---
