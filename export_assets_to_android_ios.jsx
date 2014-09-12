@@ -23,6 +23,11 @@ var androidExportOptions = [
         name: "xxhdpi",
         scaleFactor: 150,
         type: "android"
+    },
+    {
+        name: "xxxhdpi",
+        scaleFactor: 200,
+        type: "android"
     }
 ];
 
