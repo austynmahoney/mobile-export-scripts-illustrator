@@ -26,6 +26,8 @@ Selected Directory
 │   │   └───app-icon.png
 │   ├───drawable-xxhdpi
 │   │   └───app-icon.png
+│   ├───drawable-xxxhdpi
+│   │   └───app-icon.png
 └───iOS
     ├───app-icon.png
     ├───app-icon@2x.png
