@@ -2,7 +2,7 @@
 * Author: austynmahoney (https://github.com/austynmahoney)
 */
 var selectedExportOptions = {};
-
+var selectedArtboards = {};
 var androidExportOptions = [
     {
         name: "mdpi",
@@ -58,6 +58,18 @@ if(document && folder) {
 
     var androidCheckboxes = createSelectionPanel("Android", androidExportOptions, osGroup);
     var iosCheckboxes = createSelectionPanel("iOS", iosExportOptions, osGroup);
+    var abOptions = [];
+    
+    for (var i = 0; i < document.artboards.length ; i ++) {
+        abOptions.push({ 
+            name: document.artboards[i].name,
+            index: i,
+            type: 'Artboard'
+        });
+    };
+    var abCheckboxes = createArtboardSelectionPanel("artBoard", abOptions, osGroup);
+
+    // var artBoardCheckboxes = createSelectionPanel("artBoards", artboards, osGroup);
 
     var buttonGroup = dialog.add("group");
     var okButton = buttonGroup.add("button", undefined, "Export");
@@ -81,6 +93,24 @@ if(document && folder) {
 }
 
 function exportToFile(scaleFactor, resIdentifier, os) {
+    var c = 0;
+    for (key in selectedArtboards) {
+        c += 1;
+    };
+    // alert(c);
+
+    var activeArtboards = [];
+    for (var key in selectedArtboards) {
+        if (selectedArtboards.hasOwnProperty(key)) {
+            activeArtboards.push(selectedArtboards[key]);
+        }
+    }
+    // alert(activeArtboards.length);
+    if (activeArtboards.length === 0) {
+        alert('Please select at least 1 artboard.');
+        return;
+    };
+
     var i, ab, file, options, expFolder;
     if(os === "android")
         expFolder = new Folder(folder.fsName + "/drawable-" + resIdentifier);
@@ -91,9 +121,9 @@ function exportToFile(scaleFactor, resIdentifier, os) {
 		expFolder.create();
 	}
 
-	for (i = document.artboards.length - 1; i >= 0; i--) {
-		document.artboards.setActiveArtboardIndex(i);
-		ab = document.artboards[i];
+	for (i = activeArtboards.length - 1; i >= 0; i--) {
+		document.artboards.setActiveArtboardIndex(activeArtboards[i].index);
+		ab = document.artboards[activeArtboards[i].index];
         
         if(os === "android")
             file = new File(expFolder.fsName + "/" + ab.name + ".png");
@@ -111,12 +141,55 @@ function exportToFile(scaleFactor, resIdentifier, os) {
 	}
 };
 
+function createArtboardSelectionPanel(name, artboards, parent) {
+    var K = 20; // K checkboxs per panel
+    var N = Math.ceil(artboards.length / K); // total N panels
+    var panels = []
+    for (var i = 0; i < N; i++) {
+        var panel = parent.add("panel", undefined, name);
+        panel.alignChildren = "left";
+        panels.push(panel);
+    };
+    var cbs = [];
+    for(var i = 0; i < artboards.length;  i++) {
+        panel = panels[Math.floor(i / K)]
+        var cb = panel.add("checkbox", undefined, "\u00A0" + artboards[i].name);
+        cb.item = artboards[i];
+        cb.onClick = function() {
+            if(this.value) {
+                selectedArtboards[this.item.name] = this.item;
+            } else {
+                delete selectedArtboards[this.item.name];
+            }
+        };
+        cbs.push(cb);
+    }
+
+    panel = panels[Math.floor(i / K)]
+    var checkAll = panel.add("checkbox", undefined, "All");
+    checkAll.onClick = function() {
+        for(var i=0; i < cbs.length; i++) {
+            var cb = cbs[i];
+            cb.value = this.value;
+            if(cb.value) {
+                selectedArtboards[cb.item.name] = cb.item;
+            } else {
+                delete selectedArtboards[cb.item.name];
+            }
+        }
+    };
+
+}
 function createSelectionPanel(name, array, parent) {
     var panel = parent.add("panel", undefined, name);
     panel.alignChildren = "left";
     for(var i = 0; i < array.length;  i++) {
         var cb = panel.add("checkbox", undefined, "\u00A0" + array[i].name);
         cb.item = array[i];
+        if (name === "iOS") {
+            cb.value = true;
+            selectedExportOptions[cb.item.name] = cb.item;
+        };
         cb.onClick = function() {
             if(this.value) {
                 selectedExportOptions[this.item.name] = this.item;
