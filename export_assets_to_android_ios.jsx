@@ -67,6 +67,9 @@ if(document && folder) {
             type: 'Artboard'
         });
     };
+    abOptions.sort(function(a,b){
+        return a.name.localeCompare(b.name);
+    })
     var abCheckboxes = createArtboardSelectionPanel("artBoard", abOptions, osGroup);
 
     // var artBoardCheckboxes = createSelectionPanel("artBoards", artboards, osGroup);
