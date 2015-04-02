@@ -1,9 +1,27 @@
-/**
+/*
 * Author: austynmahoney (https://github.com/austynmahoney)
 */
-var selectedExportOptions = {};
+
+Array.prototype.indexOf = Array.prototype.indexOf || function(value, start) {  
+  for (var i = 0, length = this.length; i < length; i++) {  
+    if (this[i] == value) {  
+      return i;  
+    }  
+  }  
+  return -1;  
+}
+
+var selectedExportOptions = {'ldpi': true, 'mdpi': true, 'hdpi': true, 'xhdpi': true, 'xxhdpi': true,'xxxhdpi': true};
+var options = {source: 100, size: 96};
+var selectedSizes = [12,16,24,32,36,48,60,72,94,96,106];
+var availableSizes = [12,16,24,32,36,48,60,72,94,96,106];
 
 var androidExportOptions = [
+    {
+        name: "ldpi",
+        scaleFactor: 37.5,
+        type: "android"
+    },
     {
         name: "mdpi",
         scaleFactor: 50,
@@ -55,19 +73,37 @@ var document = app.activeDocument;
 if(document && folder) {
     var dialog = new Window("dialog","Select export sizes");
     var osGroup = dialog.add("group");
+    
+    var progressGroup = dialog.add("group");
+    var progressBar = progressGroup.add("progressbar", undefined, 100);
+    progressBar.maxvalue = 100;
+    progressBar.minvalue = 0;
 
     var androidCheckboxes = createSelectionPanel("Android", androidExportOptions, osGroup);
     var iosCheckboxes = createSelectionPanel("iOS", iosExportOptions, osGroup);
+    var sourceSelector = createSourceSelector("Source", androidExportOptions, osGroup);
+    var sizeSelector = createSizePanel("Size", availableSizes, osGroup);
+    var sizeSourcePanel = createSizeSourcePanel("Size source", availableSizes, osGroup);
 
     var buttonGroup = dialog.add("group");
     var okButton = buttonGroup.add("button", undefined, "Export");
     var cancelButton = buttonGroup.add("button", undefined, "Cancel");
     
     okButton.onClick = function() {
+        var eol = 0;
+        for(var k in selectedExportOptions) if(selectedExportOptions.hasOwnProperty(k)) eol++;
+        var sum = eol * selectedSizes.length;
+        var current = 0;
         for (var key in selectedExportOptions) {
             if (selectedExportOptions.hasOwnProperty(key)) {
-                var item = selectedExportOptions[key];
-                exportToFile(item.scaleFactor, item.name, item.type);
+                for(var i = 0; i < selectedSizes.length; i++) {
+                    current++;
+                    progressBar.value = current / sum * 100;
+                    dialog.update();
+                    
+                    var item = selectedExportOptions[key];
+                    exportToFile(item.scaleFactor / options.source * 100 * (selectedSizes[i] / options.size), item.name, item.type, "-" + selectedSizes[i]);
+                }
             }
         }
         this.parent.parent.close();
@@ -80,7 +116,7 @@ if(document && folder) {
     dialog.show();
 }
 
-function exportToFile(scaleFactor, resIdentifier, os) {
+function exportToFile(scaleFactor, resIdentifier, os, extension) {
     var i, ab, file, options, expFolder;
     if(os === "android")
         expFolder = new Folder(folder.fsName + "/drawable-" + resIdentifier);
@@ -96,9 +132,9 @@ function exportToFile(scaleFactor, resIdentifier, os) {
 		ab = document.artboards[i];
         
         if(os === "android")
-            file = new File(expFolder.fsName + "/" + ab.name + ".png");
+            file = new File(expFolder.fsName + "/" + ab.name + extension + ".png");
         else if(os === "ios")
-            file = new File(expFolder.fsName + "/" + ab.name + resIdentifier + ".png");
+            file = new File(expFolder.fsName + "/" + ab.name + resIdentifier + extension + ".png");
             
             options = new ExportOptionsPNG24();
             options.transparency = true;
@@ -111,12 +147,63 @@ function exportToFile(scaleFactor, resIdentifier, os) {
 	}
 };
 
+function createSourceSelector(name, array, parent) {
+    var panel = parent.add("panel", undefined, name);
+    var dropDown = panel.add("DropDownList", undefined, "source");
+    for (var i = 0; i < array.length; i++) {
+        var select = dropDown.add("item", array[i].name);
+        select.item = array[i];
+        if(array[i].scaleFactor == options.source)
+            select.selected = true;
+    }
+    dropDown.onChange = function () {
+        options.source = this.selection.item.scaleFactor;
+    };
+}
+
+function createSizePanel(name, array, parent) {
+    var panel = parent.add("panel", undefined, name);
+    for(var i = 0; i < array.length; i++) {
+        var cb = panel.add("checkbox", undefined, "\u00A0" + array[i]);
+        cb.item = array[i];
+        if(selectedSizes.indexOf(cb.item) > -1)
+            cb.value = true;
+        cb.onclick = function () {
+            if(this.value) {
+                selectedSizes.push(this.item);
+            } else {
+                selectedSizes.splice(selectedSizes.indexOf(this.item), 1);
+            }
+        }
+    }
+}
+
+function createSizeSourcePanel(name, array, parent)
+{
+    var panel = parent.add("panel", undefined, name);
+    var dropDown = panel.add("DropDownList", undefined, "sizesource");
+    for (var i = 0; i < array.length; i++) {
+        var select = dropDown.add("item", array[i] + "dp");
+        select.item = array[i];
+        if(array[i] == options.size)
+            select.selected = true;
+    }
+    dropDown.onChange = function () {
+        options.size = this.selection.item;
+    };
+}
+
 function createSelectionPanel(name, array, parent) {
     var panel = parent.add("panel", undefined, name);
     panel.alignChildren = "left";
     for(var i = 0; i < array.length;  i++) {
         var cb = panel.add("checkbox", undefined, "\u00A0" + array[i].name);
         cb.item = array[i];
+        if(selectedExportOptions[cb.item.name])
+        {
+            cb.value = true;
+            selectedExportOptions[cb.item.name] = cb.item;
+        }
         cb.onClick = function() {
             if(this.value) {
                 selectedExportOptions[this.item.name] = this.item;
