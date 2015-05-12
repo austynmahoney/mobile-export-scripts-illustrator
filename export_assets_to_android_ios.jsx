@@ -39,11 +39,13 @@ var iosExportOptions = [
     },
     {
         name: "@2x",
+        // scaleFactor: 100*1.17,
         scaleFactor: 100,
         type: "ios"
     },
     {
         name: "@3x",
+        // scaleFactor: 150*1.3,
         scaleFactor: 150,
         type: "ios"
     }
@@ -168,7 +170,8 @@ function createArtboardSelectionPanel(name, artboards, parent) {
         cbs.push(cb);
     }
 
-    panel = panels[Math.floor(i / K)]
+    panel = panels[Math.floor(i / K)];
+    
     var checkAll = panel.add("checkbox", undefined, "All");
     checkAll.onClick = function() {
         for(var i=0; i < cbs.length; i++) {
