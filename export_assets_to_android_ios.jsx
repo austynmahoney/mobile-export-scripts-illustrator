@@ -34,19 +34,19 @@ var androidExportOptions = [
 var iosExportOptions = [
     {
         name: "",
-        scaleFactor: 50,
+        scaleFactor: 100.0/2,
         type: "ios"
     },
     {
         name: "@2x",
         // scaleFactor: 100*1.17,
-        scaleFactor: 100,
+        scaleFactor: 100.0,
         type: "ios"
     },
     {
         name: "@3x",
         // scaleFactor: 150*1.3,
-        scaleFactor: 150,
+        scaleFactor: 100.0*2,
         type: "ios"
     }
 ];
@@ -59,7 +59,11 @@ if(document && folder) {
     var osGroup = dialog.add("group");
 
     var androidCheckboxes = createSelectionPanel("Android", androidExportOptions, osGroup);
+    androidCheckboxes[2].check()
     var iosCheckboxes = createSelectionPanel("iOS", iosExportOptions, osGroup);
+    iosCheckboxes[1].check()
+    iosCheckboxes[2].check()
+    iosCheckboxes[0].check()
     var abOptions = [];
     
     for (var i = 0; i < document.artboards.length ; i ++) {
@@ -73,6 +77,7 @@ if(document && folder) {
         return a.name.localeCompare(b.name);
     })
     var abCheckboxes = createArtboardSelectionPanel("artBoard", abOptions, osGroup);
+
 
     // var artBoardCheckboxes = createSelectionPanel("artBoards", artboards, osGroup);
 
@@ -95,6 +100,7 @@ if(document && folder) {
     };
 
     dialog.show();
+    okButton.selected = true
 }
 
 function exportToFile(scaleFactor, resIdentifier, os) {
@@ -150,12 +156,13 @@ function createArtboardSelectionPanel(name, artboards, parent) {
     var K = 20; // K checkboxs per panel
     var N = Math.ceil(artboards.length / K); // total N panels
     var panels = []
+
     for (var i = 0; i < N; i++) {
         var panel = parent.add("panel", undefined, name);
         panel.alignChildren = "left";
         panels.push(panel);
     };
-    var cbs = [];
+    var checkboxes = [];
     for(var i = 0; i < artboards.length;  i++) {
         panel = panels[Math.floor(i / K)]
         var cb = panel.add("checkbox", undefined, "\u00A0" + artboards[i].name);
@@ -167,15 +174,15 @@ function createArtboardSelectionPanel(name, artboards, parent) {
                 delete selectedArtboards[this.item.name];
             }
         };
-        cbs.push(cb);
+        checkboxes.push(cb);
     }
 
     panel = panels[Math.floor(i / K)];
     
     var checkAll = panel.add("checkbox", undefined, "All");
     checkAll.onClick = function() {
-        for(var i=0; i < cbs.length; i++) {
-            var cb = cbs[i];
+        for(var i=0; i < checkboxes.length; i++) {
+            var cb = checkboxes[i];
             cb.value = this.value;
             if(cb.value) {
                 selectedArtboards[cb.item.name] = cb.item;
@@ -184,18 +191,26 @@ function createArtboardSelectionPanel(name, artboards, parent) {
             }
         }
     };
-
+    checkAll.value=true
+    checkAll.onClick()
 }
-function createSelectionPanel(name, array, parent) {
+function createSelectionPanel(name, options, parent) {
     var panel = parent.add("panel", undefined, name);
     panel.alignChildren = "left";
-    for(var i = 0; i < array.length;  i++) {
-        var cb = panel.add("checkbox", undefined, "\u00A0" + array[i].name);
-        cb.item = array[i];
-        if (name === "iOS") {
-            cb.value = true;
-            selectedExportOptions[cb.item.name] = cb.item;
-        };
+    checkboxes = []
+    for(var i = 0; i < options.length;  i++) {
+        var cb = panel.add("checkbox", undefined, "\u00A0" + options[i].name);
+        cb.item = options[i];
+        
+        cb.check = function () {
+            this.value = true
+            selectedExportOptions[this.item.name] = this.item;
+        }
+        cb.uncheck = function () {
+            this.value = false
+            delete selectedExportOptions[this.item.name];    
+        }
+        
         cb.onClick = function() {
             if(this.value) {
                 selectedExportOptions[this.item.name] = this.item;
@@ -205,5 +220,7 @@ function createSelectionPanel(name, array, parent) {
                 //alert("deleted " + this.item.name);
             }
         };
+        checkboxes.push(cb)
     }
+    return checkboxes
 };
