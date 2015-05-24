@@ -11,12 +11,15 @@ How To
 
 2. Open the Illustrator file that includes the artboards you want to export.
 3. Select artworks you want to export.
-4. Select this script from the Illustrator Scripts menu.
-5. A dialog shows up with 3 functions to operate. 1. Copy the selected artworks to new document then automatically create artboards to fit each artwork. 2. Export this artboards to PNG files. 3. Execute both step 1 and 2 at once.
+4. Select this script from the Illustrator Scripts menu (or cmd+fn+F12).
+5. A dialog shows up with 3 options: 1. Copy the selected artworks to new document then automatically create artboards to contains each artwork. 2. Export this artboards to PNG files. 3. Execute both option 1 and 2 at once.
 
-![alt tag](img.png)
+![alt tag](functionSelect.png)
 
-6. If you perform 2nd step in (5), a dialog with the supported scale types will open. If any Android types are selected, the proper directory will be created inside `/Android/{SCALE_TYPE}` (e.g. `/Android/drawable-mdpi`, `/Android/drawable-xhdpi`). Any iOS types will be in `/iOS`.
+6. If you perform option 2, a dialog with the supported scale types will open. If any Android types are selected, the proper directory will be created inside `/Android/{SCALE_TYPE}` (e.g. `/Android/drawable-mdpi`, `/Android/drawable-xhdpi`). Any iOS types will be in `/iOS`.
+
+![alt tag](artboardSelect.png)
+
 7. Choose the directory where you want the images to be exported to.
 
 The name of the images will correspond to the name of the artboard. If the artboard is named `app-icon`, and you select all the available options, the script will export the artboard into the following directory structure.
