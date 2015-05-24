@@ -1,22 +1,26 @@
-var newRect = function(x, y, width, height) {
-    var l = 0;
-    var t = 1;
-    var r = 2;
-    var b = 3;
-
-    var rect = [];
-
-    rect[l] = x;
-    rect[t] = -y;
-    rect[r] = width + x;
-    rect[b] = -(height - rect[t]);
-
-    return rect;
-};
-
 
 function copyGroupItemsToNewDocument() {
+    var newRect = function(x, y, width, height) {
+        var l = 0;
+        var t = 1;
+        var r = 2;
+        var b = 3;
+
+        var rect = [];
+
+        rect[l] = x;
+        rect[t] = -y;
+        rect[r] = width + x;
+        rect[b] = -(height - rect[t]);
+
+        return rect;
+    };
+
     var items = app.selection
+    if (items.length === 0) {
+        alert('至少選擇一個artwork');
+        return;
+    };
     var newDoc = documents.add()
     var newArtboard = newDoc.artboards[0]
     var padding = 20
