@@ -4,9 +4,9 @@ if(document) {
     var dialog = new Window("dialog","Select export sizes");
     var osGroup = dialog.add("group");
     var panel = osGroup.add("panel", undefined, name);
-    rbCopyItem = panel.add("radiobutton", undefined, "\u00A0" + '1. 複製已選擇的artwork至新的檔案並嵌入artboard');
-    rbExportPNG = panel.add("radiobutton", undefined, "\u00A0" + '2. 把artboard輸出成.png圖檔');
-    rbBoth = panel.add("radiobutton", undefined, "\u00A0" + '3. 步驟1＋步驟2');
+    rbCopyItem = panel.add("radiobutton", undefined, "\u00A0" + '1. Create new artboards for selected artworks');
+    rbExportPNG = panel.add("radiobutton", undefined, "\u00A0" + '2. Export created artboards to PNG files for iOS/Android');
+    rbBoth = panel.add("radiobutton", undefined, "\u00A0" + '3. Step 1 + Step 2');
     rbBoth.value = true
     var buttonGroup = dialog.add("group");
     var cancelButton = buttonGroup.add("button", undefined, "Cancel");
@@ -20,14 +20,14 @@ if(document) {
             }
         };
         if (rbExportPNG.value || rbBoth.value) {
-            exportPNG()
+            exportPngForMobile()
         };
     }
     cancelButton.onClick = function() {
         this.parent.parent.close();
     }
     
-    buttonGroup.selected = true
+    okButton.selected = true
     dialog.show()
 }
 
@@ -51,7 +51,7 @@ function copyGroupItemsToNewDocument() {
 
     var items = app.selection
     if (items.length === 0) {
-        alert('至少選擇一個artwork');
+        alert('Choose at least one artwork');
         return false;
     };
     var newDoc = documents.add()
@@ -88,7 +88,7 @@ function copyGroupItemsToNewDocument() {
     return true
 }
 
-function exportPNG() {
+function exportPngForMobile() {
     var selectedExportOptions = {};
     var selectedArtboards = {};
     var androidExportOptions = [
@@ -180,14 +180,15 @@ function exportPNG() {
                 }
             }
             this.parent.parent.close();
+            alert('Finish')
         };
         
         cancelButton.onClick = function () {
             this.parent.parent.close();
         };
 
-        dialog.show();
         okButton.selected = true
+        dialog.show();
     }
 
     function exportToFile(scaleFactor, resIdentifier, os) {
@@ -198,7 +199,6 @@ function exportPNG() {
         for (key in selectedArtboards) {
             c += 1;
         };
-        // alert(c);
 
         var activeArtboards = [];
         for (var key in selectedArtboards) {
@@ -206,7 +206,7 @@ function exportPNG() {
                 activeArtboards.push(selectedArtboards[key]);
             }
         }
-        // alert(activeArtboards.length);
+        
         if (activeArtboards.length === 0) {
             alert('Please select at least 1 artboard.');
             return;
