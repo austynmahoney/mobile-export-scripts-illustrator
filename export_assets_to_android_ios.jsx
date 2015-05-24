@@ -5,7 +5,7 @@ if(document) {
     var osGroup = dialog.add("group");
     var panel = osGroup.add("panel", undefined, name);
     rbCopyItem = panel.add("radiobutton", undefined, "\u00A0" + '1. Create new artboards for selected artworks');
-    rbExportPNG = panel.add("radiobutton", undefined, "\u00A0" + '2. Export created artboards to PNG files for iOS/Android');
+    rbExportPNG = panel.add("radiobutton", undefined, "\u00A0" + '2. Export artboards to PNG files for iOS/Android');
     rbBoth = panel.add("radiobutton", undefined, "\u00A0" + '3. Step 1 + Step 2');
     rbBoth.value = true
     var buttonGroup = dialog.add("group");
