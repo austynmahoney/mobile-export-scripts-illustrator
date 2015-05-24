@@ -7,7 +7,7 @@ How To
 ---
 1. Import the script into Illustrator (Instructions for CC listed here)
 
-> To include a script in the Scripts menu (File > Scripts), save the script in the Scripts folder, located in the `/lllustrator CC/Presets` folder in your lllustrator CC installation directory. The script’s filename, minus the file extension, appears in the Scripts menu. Scripts that you add to the Scripts folder while Illustrator is running do not appear in the Scripts menu until the next time you launch Illustrator.
+> To include a script in the Scripts menu (File > Scripts), save the script in the Scripts folder, located in the `/Presets.localized/en_US` folder in your lllustrator installation directory. For example the folder path in my computer is `/Applications/Adobe Illustrator CS6/Presets.localized/en_US/Scripts`. Then, restart Illustrator. The script’s filename, minus the file extension, appears in the Scripts menu.
 
 2. Open the Illustrator file that includes the artboards you want to export.
 3. Select artworks you want to export.
