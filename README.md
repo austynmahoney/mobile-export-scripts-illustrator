@@ -7,12 +7,20 @@ How To
 ---
 1. Import the script into Illustrator (Instructions for CC listed here)
 
-> To include a script in the Scripts menu (File > Scripts), save the script in the Scripts folder, located in the `/lllustrator CC/Presets` folder in your lllustrator CC installation directory. The script’s filename, minus the file extension, appears in the Scripts menu. Scripts that you add to the Scripts folder while Illustrator is running do not appear in the Scripts menu until the next time you launch Illustrator.
+> To include a script in the Scripts menu (File > Scripts), save the script in the Scripts folder, located in the `/Presets.localized/en_US` folder in your lllustrator installation directory. For example the folder path in my computer is `/Applications/Adobe Illustrator CS6/Presets.localized/en_US/Scripts`. Then, restart Illustrator. The script’s filename, minus the file extension, appears in the Scripts menu.
 
 2. Open the Illustrator file that includes the artboards you want to export.
-3. Select this script from the Illustrator Scripts menu.
-4. Choose the directory where you want the images to be exported to.
-5. A dialog with the supported scale types will open. If any Android types are selected, the proper directory will be created inside `/Android/{SCALE_TYPE}` (e.g. `/Android/drawable-mdpi`, `/Android/drawable-xhdpi`). Any iOS types will be in `/iOS`.
+3. Select artworks you want to export.
+4. Select this script from the Illustrator Scripts menu (or cmd+fn+F12).
+5. A dialog shows up with 3 options: 1. Copy the selected artworks to new document then automatically create artboards to contains each artwork. 2. Export this artboards to PNG files. 3. Execute both option 1 and 2 at once.
+
+![alt tag](optionSelect.png)
+
+6. If you perform option 2, a dialog with the supported scale types will open. If any Android types are selected, the proper directory will be created inside `/Android/{SCALE_TYPE}` (e.g. `/Android/drawable-mdpi`, `/Android/drawable-xhdpi`). Any iOS types will be in `/iOS`.
+
+![alt tag](artboardSelect.png)
+
+7. Choose the directory where you want the images to be exported to.
 
 The name of the images will correspond to the name of the artboard. If the artboard is named `app-icon`, and you select all the available options, the script will export the artboard into the following directory structure.
 ```
