@@ -94,6 +94,9 @@ function exportToFile(scaleFactor, resIdentifier, os) {
 	for (i = document.artboards.length - 1; i >= 0; i--) {
 		document.artboards.setActiveArtboardIndex(i);
 		ab = document.artboards[i];
+		
+	if(ab.name.charAt(0)=="!")
+            continue;
         
         if(os === "android")
             file = new File(expFolder.fsName + "/" + ab.name + ".png");
