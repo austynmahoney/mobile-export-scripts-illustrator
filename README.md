@@ -3,7 +3,7 @@ Mobile Export Script for Illustrator
 
 An Illustrator Script (written in Javascript) for exporting artboards to Android and iOS PNG24 assets in the proper directory structure and scale types. 
 
-Script Instructions
+How To
 ---
 1. Import the script into Illustrator CC
 
