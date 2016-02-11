@@ -1,20 +1,20 @@
 Mobile Export Script for Illustrator
 =================================
 
-Script for exporting Illustrator artboards to Android and iOS PNG24 assets in the proper directory structure and scale types. 
+An Illustrator Script (written in Javascript) for exporting artboards to Android and iOS PNG24 assets in the proper directory structure and scale types. 
 
-How To
+Script Instructions
 ---
-1. Import the script into Illustrator (Instructions for CC listed here)
+1. Import the script into Illustrator CC
 
 > To include a script in the Scripts menu (File > Scripts), save the script in the Scripts folder, located in the `/lllustrator CC/Presets` folder in your lllustrator CC installation directory. The script’s filename, minus the file extension, appears in the Scripts menu. Scripts that you add to the Scripts folder while Illustrator is running do not appear in the Scripts menu until the next time you launch Illustrator.
 
 2. Open the Illustrator file that includes the artboards you want to export.
 3. Select this script from the Illustrator Scripts menu.
 4. Choose the directory where you want the images to be exported to.
-5. A dialog with the supported scale types will open. If any Android types are selected, the proper directory will be created inside `/Android/{SCALE_TYPE}` (e.g. `/Android/drawable-mdpi`, `/Android/drawable-xhdpi`). Any iOS types will be in `/iOS`.
+5. A dialog with the supported scale types will open. If any Android types are selected, it's directory will be created inside `/Android/{SCALE_TYPE}` (e.g. `/Android/drawable-mdpi`, `/Android/drawable-xhdpi`). Any iOS types will be placed in `/iOS`.
 
-The name of the images will correspond to the name of the artboard. If the artboard is named `app-icon`, and you select all the available options, the script will export the artboard into the following directory structure.
+The name of the exported images will match the name of the artboard. If the artboard is named `app-icon`, and you select all the available options, the script will export the artboard into the following directory structure:
 ```
 Selected Directory
 ├───Android
@@ -40,7 +40,7 @@ The baseline image used for Android is `xhdpi`, for iOS it is `@2x`. The script 
 License
 ---
 ```
-Copyright 2014 Austyn Mahoney
+Copyright 2016 Austyn Mahoney
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
