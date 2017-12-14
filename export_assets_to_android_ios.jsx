@@ -97,7 +97,7 @@ if(document && folder) {
 function exportToFile(scaleFactor, resIdentifier, os) {
     var i, ab, file, options, expFolder;
     if(os === "android")
-        expFolder = new Folder(folder.fsName + "/drawable-" + resIdentifier);
+        expFolder = new Folder(folder.fsName + "/Android/drawable-" + resIdentifier);
     else if(os === "ios")
         expFolder = new Folder(folder.fsName + "/iOS");
 
