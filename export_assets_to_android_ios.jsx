@@ -134,6 +134,7 @@ function createSelectionPanel(name, array, parent) {
     for(var i = 0; i < array.length;  i++) {
         var cb = panel.add("checkbox", undefined, "\u00A0" + array[i].name);
         cb.item = array[i];
+	cb.value = true;
         cb.onClick = function() {
             if(this.value) {
                 selectedExportOptions[this.item.name] = this.item;
