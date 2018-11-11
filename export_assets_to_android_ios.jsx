@@ -1,6 +1,6 @@
 /**
 * Author: austynmahoney (https://github.com/austynmahoney)
-* 
+*
 * Copyright 2016 Austyn Mahoney
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -76,7 +76,7 @@ if(document && folder) {
     var buttonGroup = dialog.add("group");
     var okButton = buttonGroup.add("button", undefined, "Export");
     var cancelButton = buttonGroup.add("button", undefined, "Cancel");
-    
+
     okButton.onClick = function() {
         for (var key in selectedExportOptions) {
             if (selectedExportOptions.hasOwnProperty(key)) {
@@ -86,7 +86,7 @@ if(document && folder) {
         }
         this.parent.parent.close();
     };
-    
+
     cancelButton.onClick = function () {
         this.parent.parent.close();
     };
@@ -97,7 +97,7 @@ if(document && folder) {
 function exportToFile(scaleFactor, resIdentifier, os) {
     var i, ab, file, options, expFolder;
     if(os === "android")
-        expFolder = new Folder(folder.fsName + "/Android/drawable-" + resIdentifier);
+        expFolder = new Folder(folder.fsName + "/drawable-" + resIdentifier);
     else if(os === "ios")
         expFolder = new Folder(folder.fsName + "/iOS");
 
@@ -108,15 +108,15 @@ function exportToFile(scaleFactor, resIdentifier, os) {
 	for (i = document.artboards.length - 1; i >= 0; i--) {
 		document.artboards.setActiveArtboardIndex(i);
 		ab = document.artboards[i];
-		
+
 	if(ab.name.charAt(0)=="!")
             continue;
-        
+
         if(os === "android")
             file = new File(expFolder.fsName + "/" + ab.name + ".png");
         else if(os === "ios")
             file = new File(expFolder.fsName + "/" + ab.name + resIdentifier + ".png");
-            
+
             options = new ExportOptionsPNG24();
             options.transparency = true;
             options.artBoardClipping = true;
